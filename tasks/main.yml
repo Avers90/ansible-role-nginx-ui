@@ -4,6 +4,15 @@
     msg: "Distribution '{{ ansible_distribution }}' is not supported. Supported: Debian, Ubuntu"
   when: ansible_distribution not in ['Debian', 'Ubuntu']
 
+- name: nginx-ui | Wait for dpkg lock to be released
+  ansible.builtin.shell: |
+    while fuser /var/lib/dpkg/lock-frontend /var/lib/apt/lists/lock >/dev/null 2>&1; do
+      sleep 5
+    done
+  changed_when: false
+  async: 300
+  poll: 10
+
 - name: nginx-ui | Install dependencies
   ansible.builtin.apt:
     name:
@@ -96,6 +105,8 @@
     src: "/tmp/nginx-ui-linux-{{ nginx_ui_arch }}.tar.gz"
     dest: "{{ nginx_ui_install_dir }}"
     remote_src: true
+    extra_opts:
+      - --no-same-owner
   when: nginx_ui_needs_install or nginx_ui_needs_update
 
 - name: nginx-ui | Set ownership of installation directory
@@ -136,6 +147,9 @@
   notify:
     - Reload systemd
     - Restart nginx-ui
+
+- name: nginx-ui | Flush handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: nginx-ui | Ensure nginx sites-available directory exists
   ansible.builtin.file:

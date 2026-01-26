@@ -7,4 +7,3 @@
   ansible.builtin.systemd:
     name: "{{ nginx_ui_service_name }}"
     state: restarted
-  when: nginx_ui_service_state == 'started'
