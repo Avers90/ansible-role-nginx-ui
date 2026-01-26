@@ -1,0 +1,24 @@
+# {{ ansible_managed }}
+
+[Unit]
+Description=Nginx UI - Yet another WebUI for Nginx
+Documentation=https://nginxui.com
+After=network.target
+
+[Service]
+Type=simple
+User={{ nginx_ui_user }}
+Group={{ nginx_ui_group }}
+ExecStart={{ nginx_ui_install_dir }}/nginx-ui -config {{ nginx_ui_config_dir }}/app.ini
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65535
+
+# Security hardening
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths={{ nginx_ui_config_dir }} {{ nginx_ui_log_dir }} /etc/nginx /var/log/nginx
+
+[Install]
+WantedBy=multi-user.target

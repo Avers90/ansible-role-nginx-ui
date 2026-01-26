@@ -1,0 +1,67 @@
+# {{ ansible_managed }}
+
+[app]
+PageSize  = 20
+JwtSecret = {{ nginx_ui_jwt_secret }}
+
+[server]
+Host        = {{ '127.0.0.1' if nginx_ui_localhost_only else nginx_ui_host }}
+Port        = {{ nginx_ui_port }}
+RunMode     = {{ nginx_ui_run_mode }}
+EnableHTTPS = {{ nginx_ui_enable_https | lower }}
+EnableH2    = {{ nginx_ui_enable_h2 | lower }}
+EnableH3    = {{ nginx_ui_enable_h3 | lower }}
+
+[database]
+Name = {{ nginx_ui_database_name }}
+
+[auth]
+IPWhiteList         = {{ nginx_ui_ip_whitelist }}
+BanThresholdMinutes = {{ nginx_ui_ban_threshold_minutes }}
+MaxAttempts         = {{ nginx_ui_max_attempts }}
+
+[cert]
+Email                = {{ nginx_ui_cert_email }}
+CADir                = {{ nginx_ui_cert_ca_dir }}
+RenewalInterval      = {{ nginx_ui_cert_renewal_interval }}
+HTTPChallengePort    = {{ nginx_ui_cert_http_challenge_port }}
+
+[crypto]
+Secret = {{ nginx_ui_crypto_secret }}
+
+[http]
+GithubProxy        = {{ nginx_ui_github_proxy }}
+InsecureSkipVerify = {{ nginx_ui_insecure_skip_verify | lower }}
+
+[logrotate]
+Enabled  = {{ nginx_ui_logrotate_enabled | lower }}
+CMD      = {{ nginx_ui_logrotate_cmd }}
+Interval = {{ nginx_ui_logrotate_interval }}
+
+[nginx]
+AccessLogPath   = {{ nginx_ui_nginx_access_log }}
+ErrorLogPath    = {{ nginx_ui_nginx_error_log }}
+LogDirWhiteList = {{ nginx_ui_nginx_log_dir_whitelist }}
+ConfigDir       = {{ nginx_ui_nginx_config_dir }}
+PIDPath         = {{ nginx_ui_nginx_pid_path }}
+TestConfigCmd   = {{ nginx_ui_nginx_test_config_cmd }}
+ReloadCmd       = {{ nginx_ui_nginx_reload_cmd }}
+RestartCmd      = {{ nginx_ui_nginx_restart_cmd }}
+
+[node]
+Name             = {{ nginx_ui_node_name }}
+Secret           = {{ nginx_ui_node_secret }}
+SkipInstallation = {{ nginx_ui_skip_installation | lower }}
+Demo             = {{ nginx_ui_demo_mode | lower }}
+
+[openai]
+BaseUrl              = {{ nginx_ui_openai_base_url }}
+Token                = {{ nginx_ui_openai_token }}
+Proxy                = {{ nginx_ui_openai_proxy }}
+Model                = {{ nginx_ui_openai_model }}
+APIType              = {{ nginx_ui_openai_api_type }}
+EnableCodeCompletion = {{ nginx_ui_enable_code_completion | lower }}
+CodeCompletionModel  = {{ nginx_ui_code_completion_model }}
+
+[terminal]
+StartCmd = {{ nginx_ui_terminal_start_cmd }}

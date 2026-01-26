@@ -1,0 +1,94 @@
+---
+## Nginx UI version (check https://github.com/0xJacky/nginx-ui/releases)
+nginx_ui_version: "v2.3.2"
+
+## Installation directory
+nginx_ui_install_dir: /usr/local/nginx-ui
+
+## Config directory
+nginx_ui_config_dir: /usr/local/etc/nginx-ui
+
+## Log directory
+nginx_ui_log_dir: /var/log/nginx-ui
+
+## User to run nginx-ui
+nginx_ui_user: root
+nginx_ui_group: root
+
+## Server settings
+nginx_ui_host: "0.0.0.0"
+nginx_ui_port: 9000
+
+## Bind to localhost only (access via SSH tunnel or reverse proxy)
+## Access via SSH tunnel: ssh -L 9000:127.0.0.1:9000 user@server
+nginx_ui_localhost_only: false
+
+## Run mode: debug, release
+nginx_ui_run_mode: "release"
+
+## Enable HTTPS for panel
+nginx_ui_enable_https: false
+nginx_ui_enable_h2: false
+nginx_ui_enable_h3: false
+
+## Database name (SQLite)
+nginx_ui_database_name: "database"
+
+## JWT Secret (will be auto-generated if empty)
+nginx_ui_jwt_secret: ""
+
+## Auth settings
+nginx_ui_ip_whitelist: ""
+nginx_ui_ban_threshold_minutes: 10
+nginx_ui_max_attempts: 10
+
+## Certificate settings (Let's Encrypt)
+nginx_ui_cert_email: ""
+nginx_ui_cert_ca_dir: ""
+nginx_ui_cert_renewal_interval: 7
+nginx_ui_cert_http_challenge_port: 9180
+
+## Crypto secret (will be auto-generated if empty)
+nginx_ui_crypto_secret: ""
+
+## HTTP settings
+nginx_ui_github_proxy: ""
+nginx_ui_insecure_skip_verify: false
+
+## Logrotate settings
+nginx_ui_logrotate_enabled: false
+nginx_ui_logrotate_cmd: "logrotate /etc/logrotate.d/nginx"
+nginx_ui_logrotate_interval: 1440
+
+## Nginx paths (auto-detected if empty)
+nginx_ui_nginx_access_log: "/var/log/nginx/access.log"
+nginx_ui_nginx_error_log: "/var/log/nginx/error.log"
+nginx_ui_nginx_log_dir_whitelist: "/var/log/nginx"
+nginx_ui_nginx_config_dir: ""
+nginx_ui_nginx_pid_path: ""
+nginx_ui_nginx_test_config_cmd: ""
+nginx_ui_nginx_reload_cmd: ""
+nginx_ui_nginx_restart_cmd: ""
+
+## Node settings
+nginx_ui_node_name: "Local"
+nginx_ui_node_secret: ""
+nginx_ui_skip_installation: false
+nginx_ui_demo_mode: false
+
+## OpenAI settings (optional)
+nginx_ui_openai_base_url: ""
+nginx_ui_openai_token: ""
+nginx_ui_openai_proxy: ""
+nginx_ui_openai_model: "gpt-4o"
+nginx_ui_openai_api_type: ""
+nginx_ui_enable_code_completion: false
+nginx_ui_code_completion_model: "gpt-4o-mini"
+
+## Terminal settings
+nginx_ui_terminal_start_cmd: "bash"
+
+## Service settings
+nginx_ui_service_name: nginx-ui
+nginx_ui_service_enabled: true
+nginx_ui_service_state: started

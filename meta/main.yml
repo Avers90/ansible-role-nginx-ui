@@ -1,0 +1,20 @@
+---
+galaxy_info:
+  author: Avers90
+  description: Install and configure Nginx UI - Yet another WebUI for Nginx
+  license: MIT
+  min_ansible_version: "2.10"
+  platforms:
+    - name: Debian
+      versions:
+        - bullseye
+        - bookworm
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+        - noble
+
+dependencies: []
+
+allow_duplicates: false
