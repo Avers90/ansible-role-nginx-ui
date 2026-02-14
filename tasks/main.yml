@@ -1,8 +1,8 @@
 ---
 - name: nginx-ui | Fail if distro is not supported
   ansible.builtin.fail:
-    msg: "Distribution '{{ ansible_distribution }}' is not supported. Supported: Debian, Ubuntu"
-  when: ansible_distribution not in ['Debian', 'Ubuntu']
+    msg: "Distribution '{{ ansible_facts['distribution'] }}' is not supported. Supported: Debian, Ubuntu"
+  when: ansible_facts['distribution'] not in ['Debian', 'Ubuntu']
 
 - name: nginx-ui | Wait for dpkg lock to be released
   ansible.builtin.shell: |
@@ -24,7 +24,7 @@
 
 - name: nginx-ui | Set architecture fact
   ansible.builtin.set_fact:
-    nginx_ui_arch: "{{ _arch_map[ansible_architecture] | default('64') }}"
+    nginx_ui_arch: "{{ _arch_map[ansible_facts['architecture']] | default('64') }}"
   vars:
     _arch_map:
       x86_64: "64"
@@ -190,7 +190,7 @@
       nginx-ui {{ nginx_ui_version }} installed successfully!
 
       Access (localhost only):
-        1. Create SSH tunnel: ssh -L 9000:127.0.0.1:{{ nginx_ui_port }} user@{{ ansible_default_ipv4.address | default(inventory_hostname) }}
+        1. Create SSH tunnel: ssh -L 9000:127.0.0.1:{{ nginx_ui_port }} user@{{ ansible_facts['default_ipv4']['address'] | default(inventory_hostname) }}
         2. Open in browser: http://localhost:9000
 
       First time setup:
@@ -204,14 +204,14 @@
         systemctl stop nginx-ui
         systemctl restart nginx-ui
         systemctl status nginx-ui
-  when: nginx_ui_localhost_only
+  when: nginx_ui_localhost_only | bool
 
 - name: nginx-ui | Display access information
   ansible.builtin.debug:
     msg: |
       nginx-ui {{ nginx_ui_version }} installed successfully!
 
-      Access URL: http://{{ ansible_default_ipv4.address | default(inventory_hostname) }}:{{ nginx_ui_port }}
+      Access URL: http://{{ ansible_facts['default_ipv4']['address'] | default(inventory_hostname) }}:{{ nginx_ui_port }}
 
       First time setup:
         - Visit the URL above to create admin account
@@ -224,4 +224,4 @@
         systemctl stop nginx-ui
         systemctl restart nginx-ui
         systemctl status nginx-ui
-  when: not nginx_ui_localhost_only
+  when: not nginx_ui_localhost_only | bool
